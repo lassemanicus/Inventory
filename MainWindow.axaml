@@ -1,39 +1,38 @@
-<!-- Remember to update the x:Class namespace to match your project root namespace -->
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        x:Class="InventoryApp.MainWindow"
-        Width="900" Height="500" Title="Inventory System">
-    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,*,Auto">
-        <TextBlock Grid.ColumnSpan="2" Margin="12" FontSize="18" Text="Inventory System"/>
+        xmlns:local="using:Inventory"
+        x:Class="Inventory.MainWindow"
+        x:DataType="local:MainWindow"
+        Width="900" Height="500" Title="Inventory">
+    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,*,Auto" Margin="12">
+        <TextBlock Grid.ColumnSpan="2" FontSize="18" FontWeight="Bold" Text="Inventory System"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Spacing="6">
+            <TextBlock FontWeight="Bold" Text="Queued Orders"/>
+            <ListBox ItemsSource="{Binding QueuedOrders}">
+                <ListBox.ItemTemplate>
+                    
+                    <DataTemplate x:DataType="x:String">
+                        <TextBlock Text="{Binding .}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
 
         
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="12">
-            <TextBlock FontWeight="Bold" Text="Queued Orders"/>
-            <ListBox Items="{Binding QueuedOrders}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-
-
-        <!-- Processed Orders -->
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="12">
+        <StackPanel Grid.Row="1" Grid.Column="1" Spacing="6">
             <TextBlock FontWeight="Bold" Text="Processed Orders"/>
-            <ListBox Items="{Binding ProcessedOrders}">
+            <ListBox ItemsSource="{Binding ProcessedOrders}">
                 <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}"/>
+                    <DataTemplate x:DataType="x:String">
+                        <TextBlock Text="{Binding .}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
 
-
-        <!-- Controls / Revenue -->
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="12" Spacing="12">
+       
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="12">
             <Button Content="Process Next Order" Command="{Binding ProcessNextOrderCommand}"/>
             <TextBlock Text="Total Revenue:" VerticalAlignment="Center"/>
             <TextBlock Text="{Binding TotalRevenue, StringFormat=C}" FontWeight="Bold" VerticalAlignment="Center"/>
